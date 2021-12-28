@@ -13,7 +13,17 @@ app.use(router)
 app.use(ElementPlus, { size: 'small', zIndex: 3000 })
 app.mount('#app')
 
-imRequest.request({
-  url: '/home/multidata',
-  method: 'GET'
-})
+interface DataType {
+  data: any
+  returnCode: string
+  success: boolean
+}
+
+imRequest
+  .request<DataType>({
+    url: '/home/multidata',
+    method: 'GET'
+  })
+  .then((res) => {
+    console.log(res)
+  })

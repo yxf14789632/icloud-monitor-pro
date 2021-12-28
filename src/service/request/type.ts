@@ -3,7 +3,7 @@ import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 export interface ImRequestInterceptors {
   requestInterceptors?: (config: AxiosRequestConfig) => AxiosRequestConfig
   requestInterceptorsCatch?: (error: any) => any
-  responseInterceptors?: (config: AxiosResponse) => AxiosResponse
+  responseInterceptors?: (config: any) => any
   responseInterceptorsCatch?: (error: any) => any
 }
 
