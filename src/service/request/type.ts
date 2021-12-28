@@ -9,4 +9,5 @@ export interface ImRequestInterceptors {
 
 export interface ImRequestConfig extends AxiosRequestConfig {
   interceptors?: ImRequestInterceptors
+  showLoading?: boolean
 }

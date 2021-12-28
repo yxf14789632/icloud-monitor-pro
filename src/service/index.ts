@@ -6,6 +6,10 @@ const imRequest = new ImRequest({
   timeout: TIME_OUT,
   interceptors: {
     requestInterceptors: (config) => {
+      const token = '123test'
+      if (token) {
+        config.headers!.Authorization = `Bearer ${token}`
+      }
       console.log('请求成功拦截')
       return config
     },
