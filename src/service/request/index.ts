@@ -58,7 +58,7 @@ class ImRequest {
     )
   }
 
-  request<T>(config: ImRequestConfig): Promise<T> {
+  request<T>(config: ImRequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
       if (config.interceptors?.requestInterceptors) {
         config = config.interceptors.requestInterceptors(config)
@@ -83,18 +83,18 @@ class ImRequest {
     })
   }
 
-  get<T>(config: ImRequest): Promise<T> {
+  get<T>(config: ImRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'GET' })
   }
 
-  post<T>(config: ImRequest): Promise<T> {
+  post<T>(config: ImRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'POST' })
   }
 
-  delete<T>(config: ImRequest): Promise<T> {
+  delete<T>(config: ImRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'DELETE' })
   }
-  patch<T>(config: ImRequest): Promise<T> {
+  patch<T>(config: ImRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'PATCH' })
   }
 }
