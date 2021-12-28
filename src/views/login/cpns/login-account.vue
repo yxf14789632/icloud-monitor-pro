@@ -6,6 +6,7 @@
           class="login-user"
           v-model="account.name"
           placeholder="请输入用户名"
+          clearable
         >
           <template #prefix>
             <el-icon class="el-input__icon"><user /></el-icon>
@@ -14,10 +15,11 @@
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input
-          type="password"
+          show-password
           class="login-password"
           v-model="account.password"
           placeholder="请输入密码"
+          clearable
         >
           <template #prefix>
             <el-icon class="el-input__icon"><lock /></el-icon>
@@ -32,19 +34,32 @@
 import { defineComponent, reactive, ref } from 'vue'
 import { ElForm } from 'element-plus'
 import rules from '../config/account-config'
+import localCache from '@/utils/cache'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   setup() {
+    const store = useStore()
+
     const account = reactive({
-      name: '',
-      password: ''
+      name: localCache.getCache('name') ?? '',
+      password: localCache.getCache('password') ?? ''
     })
 
     const formRef = ref<InstanceType<typeof ElForm>>()
-    const loginAction = () => {
+    const loginAction = (isKeepPassword: boolean) => {
       formRef.value?.validate((valid) => {
         if (valid) {
-          console.log('正在开始登录')
+          // 判断是否需要记住密码
+          if (isKeepPassword) {
+            localCache.setCache('name', account.name)
+            localCache.setCache('password', account.password)
+          } else {
+            localCache.deleteCache('name')
+            localCache.deleteCache('password')
+          }
+          // 开始登录验证
+          store.dispatch('login/accountLoginAction', { ...account })
         }
       })
     }
