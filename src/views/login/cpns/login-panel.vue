@@ -1,6 +1,13 @@
 <template>
   <div class="im-login-content">
-    <div class="im-login-background"></div>
+    <div class="im-login-background">
+      <svg-icon
+        name="backgound"
+        color="#FFFFFF"
+        :width="600"
+        :height="400"
+      ></svg-icon>
+    </div>
     <div class="im-login-form">
       <h2>智能监控系统</h2>
       <login-account ref="accountRef"></login-account>
@@ -22,10 +29,12 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import LoginAccount from './login-account.vue'
+import SvgIcon from '@/components/SvgIcon.vue'
 
 export default defineComponent({
   components: {
-    LoginAccount
+    LoginAccount,
+    SvgIcon
   },
   setup() {
     const isKeepPassword = ref(true)
@@ -57,7 +66,7 @@ export default defineComponent({
   display: flex;
 }
 .im-login-background {
-  background: url('../../../assets/img/backgound.svg') no-repeat;
+  /* background: url('../../../assets/img/backgound.svg') no-repeat; */
   width: 600px;
   height: 400px;
   display: flex;

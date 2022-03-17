@@ -1,6 +1,6 @@
 // 编写规则
 const rules = {
-  name: [
+  username: [
     {
       required: true,
       message: '请输入用户名',

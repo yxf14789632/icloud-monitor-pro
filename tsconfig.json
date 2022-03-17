@@ -23,6 +23,7 @@
     "baseUrl": ".",
     // 指定具体要解析使用的配型
     "types": ["webpack-env"],
+    "suppressImplicitAnyIndexErrors": true,
     // 编译阶段的路径解析
     "paths": {
       "@/*": ["src/*"],

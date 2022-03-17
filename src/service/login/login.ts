@@ -10,8 +10,8 @@ import {
 
 enum LoginAPI {
   AccountLogin = '/login',
-  LoginUserInfo = '/users/',
-  UserMenus = '/role/'
+  LoginUserInfo = '/api/v1/users',
+  UserMenus = '/api/v1/menus'
 }
 
 export function accountLoginRequest(account: IAccount) {
@@ -21,14 +21,14 @@ export function accountLoginRequest(account: IAccount) {
   })
 }
 
-export function requestUserInfoById(id: number) {
+export function getCurrentUserInfo() {
   return imRequest.get<IDataType<IUserInfoResult>>({
-    url: LoginAPI.LoginUserInfo + id
+    url: LoginAPI.LoginUserInfo + '/me'
   })
 }
 
-export function requestUserMenuByRoleId(id: number) {
+export function requestUserMenu() {
   return imRequest.get<IDataType<IUserMenusResult[]>>({
-    url: LoginAPI.UserMenus + id + '/menu'
+    url: LoginAPI.UserMenus + '/route'
   })
 }

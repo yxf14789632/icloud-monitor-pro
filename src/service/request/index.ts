@@ -90,7 +90,9 @@ class ImRequest {
   post<T>(config: ImRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'POST' })
   }
-
+  put<T>(config: ImRequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'PUT' })
+  }
   delete<T>(config: ImRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'DELETE' })
   }

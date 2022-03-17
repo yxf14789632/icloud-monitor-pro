@@ -1,10 +1,10 @@
 <template>
   <div class="login-account">
     <el-form label-width="60px" :rules="rules" :model="account" ref="formRef">
-      <el-form-item label="账号" prop="name">
+      <el-form-item label="账号" prop="username">
         <el-input
           class="login-user"
-          v-model="account.name"
+          v-model="account.username"
           placeholder="请输入用户名"
           clearable
         >
@@ -42,7 +42,7 @@ export default defineComponent({
     const store = useStore()
 
     const account = reactive({
-      name: localCache.getCache('name') ?? '',
+      username: localCache.getCache('username') ?? '',
       password: localCache.getCache('password') ?? ''
     })
 
@@ -52,10 +52,10 @@ export default defineComponent({
         if (valid) {
           // 判断是否需要记住密码
           if (isKeepPassword) {
-            localCache.setCache('name', account.name)
+            localCache.setCache('username', account.username)
             localCache.setCache('password', account.password)
           } else {
-            localCache.deleteCache('name')
+            localCache.deleteCache('username')
             localCache.deleteCache('password')
           }
           // 开始登录验证

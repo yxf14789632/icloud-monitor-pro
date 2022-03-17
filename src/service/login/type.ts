@@ -1,5 +1,5 @@
 export interface IAccount {
-  name: string
+  username: string
   password: string
 }
 
@@ -11,51 +11,44 @@ export interface ILoginResult {
 
 export interface IUserInfoResult {
   id: number
-  name: string
-  realname: string
-  cellphone: number
-  enable: number
-  createAt: Date
-  updateAt: Date
-  role: Role
-  department: Department
+  nickname: string
+  avatar: string
+  roles: []
+  perms: []
 }
 
-export interface Role {
-  id: number
-  name: string
-  intro: string
-  createAt: Date
-  updateAt: Date
-}
+// export interface Child {
+//   id: number
+//   parentId: number
+//   path: string
+//   component: string
+//   name: string
+//   hidden: boolean
+//   meta: Meta
+//   children: Child[]
+// }
 
-export interface Department {
-  id: number
-  name: string
-  parentId?: any
-  createAt: Date
-  updateAt: Date
-  leader: string
-}
-
-export interface Child {
-  id: number
-  url: string
-  name: string
-  sort: number
-  type: number
-  children?: any
-  parentId: number
+export interface Meta {
+  title: string
+  icon: string
+  roles: []
 }
 
 export interface IUserMenusResult {
   id: number
+  parentId: number
+  path: string
+  component: string
+  alwaysShow: boolean
   name: string
-  type: number
-  url: string
-  icon: string
-  sort: number
-  children: Child[]
+  hidden: boolean
+  meta: Meta
+  children: IUserMenusResult[]
+}
+
+export interface IVaiTab {
+  title?: string
+  path?: string
 }
 
 export interface IDataType<T> {

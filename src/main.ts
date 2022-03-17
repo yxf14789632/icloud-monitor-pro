@@ -9,31 +9,19 @@ import 'normalize.css'
 import './assets/css/index.less'
 import { setupStore } from './store'
 import * as Icons from '@element-plus/icons'
+import IconPlugin from '@/icons/index'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
 const app = createApp(App)
 app.use(store)
-app.use(router)
-app.use(ElementPlus, { size: 'small', zIndex: 3000 })
 // 刷新 重新load localCache数据到vuex中
 setupStore()
+app.use(router)
+app.use(ElementPlus, { size: 'small', zIndex: 3000, locale: zhCn })
+app.use(IconPlugin)
 app.mount('#app')
 
 // 全局注册图标
 Object.keys(Icons).forEach((key) => {
   app.component(key, Icons[key as keyof typeof Icons])
 })
-
-// interface DataType {
-//   data: any
-//   returnCode: string
-//   success: boolean
-// }
-
-// imRequest
-//   .request<DataType>({
-//     url: '/home/multidata',
-//     method: 'GET'
-//   })
-//   .then((res) => {
-//     console.log(res)
-//   })

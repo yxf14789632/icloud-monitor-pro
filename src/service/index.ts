@@ -1,5 +1,4 @@
 import localCache from '@/utils/cache'
-import loginModule from '@/store/login/login'
 import ImRequest from './request'
 import { BASE_URL, TIME_OUT } from './request/config'
 
@@ -10,6 +9,7 @@ const imRequest = new ImRequest({
     requestInterceptors: (config) => {
       const token = localCache.getCache('token')
       if (token) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         config.headers!.Authorization = `Bearer ${token}`
       }
       return config
