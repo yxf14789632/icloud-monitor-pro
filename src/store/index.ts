@@ -36,7 +36,7 @@ const store = createStore<IRootState>({
   },
   actions: {},
   modules: {
-    login
+    login: login
   }
 })
 

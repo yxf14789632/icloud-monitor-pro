@@ -1,13 +1,14 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import localCache from '@/utils/cache'
+import 'nprogress/nprogress.css'
+import NProgress from 'nprogress'
 import Layout from '@/layout/index.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     component: Layout,
-    redirect: '/main',
-    children: []
+    redirect: '/main'
   },
   {
     path: '/login',
@@ -22,12 +23,15 @@ const router = createRouter({
 })
 
 // 路由守卫
-router.beforeEach((to) => {
-  if (to.path !== '/login') {
-    const token = localCache.getCache('token')
-    if (!token) {
-      return '/login'
-    }
+router.beforeEach((to, from, next) => {
+  NProgress.start()
+  const token = localCache.getCache('token')
+  if (to.path !== '/login' && !token) {
+    NProgress.done()
+    next({ path: '/login' })
+  } else {
+    NProgress.done()
+    next()
   }
 })
 

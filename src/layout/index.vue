@@ -56,7 +56,8 @@ const { path, meta } = route
 // 将首页添加到tabs
 const tab: IVaiTab = {
   path: path,
-  title: meta.title as string
+  title: meta.title as string,
+  icon: meta.icon as string
 }
 store.commit('addTab', tab)
 

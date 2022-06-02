@@ -37,7 +37,7 @@ import {
   computed,
   watch
 } from 'vue'
-const { proxy } = getCurrentInstance()
+const { proxy }: any = getCurrentInstance()
 
 const state = defineProps({
   // 配置项
@@ -83,7 +83,6 @@ const emit = defineEmits(['update:modelValue'])
 
 const modelValue = computed({
   get: () => {
-    console.log('heihei', state.modelValue)
     return state.modelValue
   },
   set: (val) => {
@@ -95,22 +94,20 @@ const defaultExpandedKey = ref([])
 
 function initHandle() {
   nextTick(() => {
-    console.log('selectedValue1', modelValue)
     const selectedValue = modelValue.value
-    console.log('selectedValue', modelValue.value)
     if (selectedValue !== null && typeof selectedValue !== 'undefined') {
       const node = proxy.$refs.selectTree.getNode(selectedValue)
       if (node) {
         valueTitle.value = node.data[state.props.label]
         proxy.$refs.selectTree.setCurrentKey(selectedValue) // 设置默认选中
-        defaultExpandedKey.value = [selectedValue] // 设置默认展开
+        defaultExpandedKey.value = [selectedValue] as any // 设置默认展开
       } else {
         clearHandle()
       }
     }
   })
 }
-function handleNodeClick(node) {
+function handleNodeClick(node: any) {
   valueTitle.value = node[state.props.label]
   modelValue.value = node[state.props.value]
   defaultExpandedKey.value = []
@@ -118,19 +115,18 @@ function handleNodeClick(node) {
   selectFilterData('')
 }
 
-function selectFilterData(val) {
-  console.log(val)
+function selectFilterData(val: any) {
   proxy.$refs.selectTree.filter(val)
 }
 
-function filterNode(value, data) {
+function filterNode(value: any, data: any) {
   if (!value) return true
   return data[state.props['label']].indexOf(value) !== -1
 }
 
 function clearHandle() {
   valueTitle.value = ''
-  modelValue.value = ''
+  modelValue.value = '' as any
   defaultExpandedKey.value = []
   clearSelected()
 }
@@ -141,7 +137,6 @@ function clearSelected() {
 }
 
 onMounted(() => {
-  console.log('hah', modelValue)
   initHandle()
 })
 

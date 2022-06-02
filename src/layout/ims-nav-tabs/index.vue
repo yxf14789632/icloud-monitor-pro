@@ -6,13 +6,23 @@
     type="card"
     @tab-remove="removeTab"
   >
-    <el-tab-pane
-      v-for="item in tabList"
-      :key="item.path"
-      :label="item.title"
-      :name="item.path"
-      :closable="item.path !== '/main'"
-    ></el-tab-pane>
+    <template v-for="item in tabList" :key="item.path">
+      <el-tab-pane
+        :label="item.title"
+        :name="item.path"
+        :closable="item.path !== '/main'"
+      >
+        <template #label>
+          <svg-icon
+            :name="item.icon"
+            :width="16"
+            :height="16"
+            color="#000000"
+          ></svg-icon>
+          <span style="margin-left: 4px">{{ item.title }}</span>
+        </template>
+      </el-tab-pane>
+    </template>
   </el-tabs>
 </template>
 
@@ -40,9 +50,12 @@ const addTab = () => {
   const { path, meta } = route
   const tab: IVaiTab = {
     path: path,
-    title: meta.title as string
+    title: meta.title as string,
+    icon: meta.icon as string
   }
-  store.commit('addTab', tab)
+  if (path !== '/login') {
+    store.commit('addTab', tab)
+  }
 }
 
 watch(
@@ -76,7 +89,6 @@ onMounted(() => {
 })
 
 const removeTab = (targetName: string) => {
-  console.log(targetName)
   if (targetName === '/main') return
   const tabs = tabList.value
   let activeName = activeTab.value
@@ -107,7 +119,8 @@ const setActiveRoutes = () => {
         const routeList = item.children
         const activeSideTab: IVaiTab = {
           title: item.meta.title,
-          path: item.path
+          path: item.path,
+          icon: item.meta.icon
         }
         store.commit('setActiveSideTab', activeSideTab)
         store.commit('setRoutes', routeList)
@@ -129,9 +142,9 @@ const clickBtn = (tab: any) => {
         const routeList = item.children
         const activeSideTab: IVaiTab = {
           title: item.meta.title,
-          path: item.path
+          path: item.path,
+          icon: item.meta.icon
         }
-        console.log(activeSideTab)
         store.commit('setActiveSideTab', activeSideTab)
         store.commit('setRoutes', routeList)
         return
@@ -165,6 +178,10 @@ function queryMenuContainsPath(
 </script>
 
 <style lang="less">
+.ims-tabs .is-active .svg-icon {
+  color: #409eff !important;
+}
+
 .ims-tabs-content-smooth {
   height: 38px;
 }

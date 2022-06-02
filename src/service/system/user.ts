@@ -1,8 +1,7 @@
-import imRequest from '../index'
-import { IDataType } from '../login/type'
+import request from '@/utils/request'
 
 export function listUsersWithPage(queryParams: any) {
-  return imRequest.get<IDataType<any>>({
+  return request({
     url: '/api/v1/users',
     params: queryParams
   })
@@ -14,7 +13,7 @@ export function listUsersWithPage(queryParams: any) {
  * @param userId
  */
 export function getUserFormDetail(userId: any) {
-  return imRequest.get({
+  return request({
     url: '/api/v1/users/' + userId
   })
 }
@@ -25,7 +24,7 @@ export function getUserFormDetail(userId: any) {
  * @returns
  */
 export function addUser(data: any) {
-  return imRequest.post<IDataType<any>>({
+  return request({
     url: '/api/v1/users',
     method: 'post',
     data: data
@@ -39,7 +38,7 @@ export function addUser(data: any) {
  * @param data 修改内容
  */
 export function updateUser(id: number, data: any) {
-  return imRequest.put({
+  return request({
     url: '/api/v1/users/' + id,
     method: 'put',
     data: data
@@ -47,7 +46,7 @@ export function updateUser(id: number, data: any) {
 }
 
 export function deleteUsers(userIds: any) {
-  return imRequest.delete({
+  return request({
     url: '/api/v1/users/' + userIds,
     method: 'delete'
   })
@@ -60,7 +59,7 @@ export function deleteUsers(userIds: any) {
  * @param data
  */
 export function updateUserPart(id: number, data: any) {
-  return imRequest.patch({
+  return request({
     url: '/api/v1/users/' + id,
     method: 'patch',
     data: data

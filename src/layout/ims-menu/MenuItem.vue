@@ -6,14 +6,26 @@
         :index="menu.path"
       >
         <template #title>
-          <i :class="menu.meta.icon"></i>
-          <span>{{ menu.meta.title }}</span>
+          <svg-icon
+            :name="menu.meta.icon"
+            :width="16"
+            :height="16"
+            color="#000000"
+          ></svg-icon>
+          <span style="margin-left: 12px">{{ menu.meta.title }}</span>
         </template>
         <menu-item :menuList="menu.children"></menu-item>
       </el-sub-menu>
       <el-menu-item v-else :index="menu.path">
-        <i :class="menu.meta.icon"></i>
-        <template #title>{{ menu.meta.title }}</template>
+        <template #title>
+          <svg-icon
+            :name="menu.meta.icon"
+            :width="16"
+            :height="16"
+            color="#000000"
+          ></svg-icon>
+          <span style="margin-left: 12px">{{ menu.meta.title }}</span>
+        </template>
       </el-menu-item>
     </template>
     <template v-else>
@@ -25,3 +37,9 @@
 <script setup lang="ts">
 defineProps(['menuList'])
 </script>
+
+<style scoped>
+.is-active .svg-icon {
+  color: #409eff !important;
+}
+</style>

@@ -1,34 +1,48 @@
-import imRequest from '../index'
+import request from '@/utils/request'
+import { IAccount } from './type'
 
-import {
-  IAccount,
-  IDataType,
-  ILoginResult,
-  IUserInfoResult,
-  IUserMenusResult
-} from './type'
-
-enum LoginAPI {
-  AccountLogin = '/login',
-  LoginUserInfo = '/api/v1/users',
-  UserMenus = '/api/v1/menus'
-}
-
+/**
+ * 登录接口
+ * @param account 用户信息
+ * @returns
+ */
 export function accountLoginRequest(account: IAccount) {
-  return imRequest.post<IDataType<ILoginResult>>({
-    url: LoginAPI.AccountLogin,
+  return request({
+    url: '/login',
+    method: 'post',
     data: account
   })
 }
 
+/**
+ * 获取当前用户
+ * @returns 用户信息
+ */
 export function getCurrentUserInfo() {
-  return imRequest.get<IDataType<IUserInfoResult>>({
-    url: LoginAPI.LoginUserInfo + '/me'
+  return request({
+    url: '/api/v1/users/me',
+    method: 'get'
   })
 }
 
+/**
+ * 获取用户路由
+ * @returns
+ */
 export function requestUserMenu() {
-  return imRequest.get<IDataType<IUserMenusResult[]>>({
-    url: LoginAPI.UserMenus + '/route'
+  return request({
+    url: '/api/v1/menus/route',
+    method: 'get'
+  })
+}
+
+/**
+ * 退出登录
+ * @returns
+ */
+export function logoutRequest() {
+  return request({
+    url: '/logout',
+    method: 'delete'
   })
 }

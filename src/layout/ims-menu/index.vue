@@ -30,12 +30,8 @@ expandRoutes.forEach((item: { path: any }) =>
   openeds.value.push(item.path as string)
 )
 
-const handleOpen = () => {
-  console.log(111)
-}
-const handleClose = () => {
-  console.log(222)
-}
+const handleOpen = () => {}
+const handleClose = () => {}
 </script>
 <style>
 .el-menu-vertical-demo:not(.el-menu--collapse) {

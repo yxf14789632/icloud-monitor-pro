@@ -31,7 +31,7 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus: IUserMenusResult[]) {
       state.userMenus = userMenus
-      const routes = filterAsyncRoutes(userMenus)
+      const routes = filterAsyncRoutes(userMenus, state.userInfo.roles)
 
       routes.forEach((route) => {
         router.addRoute(route)
@@ -58,7 +58,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       commit('changeUserMenus', userMenus)
       localCache.setCache('userMenus', userMenus)
 
-      // 4、跳转到首页
+      // // 4、跳转到首页
       router.push('/main')
     },
     loadLocalLogin({ commit }) {

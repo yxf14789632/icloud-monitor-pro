@@ -49,6 +49,7 @@ export interface IUserMenusResult {
 export interface IVaiTab {
   title?: string
   path?: string
+  icon?: string
 }
 
 export interface IDataType<T> {

@@ -23,6 +23,7 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'vue/no-mutating-props': 0,
     'vue/multi-word-component-names': 0,
-    '@typescript-eslint/no-unused-vars': 'off'
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-empty-function': 'off'
   }
 }

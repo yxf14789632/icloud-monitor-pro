@@ -20,7 +20,7 @@ export default defineComponent({
     name: {
       type: String,
       required: true,
-      default: 'email'
+      default: 'home'
     },
     width: {
       type: Number,
@@ -35,6 +35,18 @@ export default defineComponent({
       default: '#000'
     }
   },
+  computed: {
+    iconName() {
+      return `#icon-${this.name}`
+    },
+    svgClass() {
+      if (this.name) {
+        return 'svg-icon ' + this.name
+      } else {
+        return 'svg-icon'
+      }
+    }
+  },
   setup(props) {
     return {
       props
@@ -42,3 +54,13 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+.svg-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+</style>
