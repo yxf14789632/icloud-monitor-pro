@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, Directive } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -24,4 +24,11 @@ app.mount('#app')
 // 全局注册图标
 Object.keys(Icons).forEach((key) => {
   app.component(key, Icons[key as keyof typeof Icons])
+})
+
+// 自定义指令
+import * as directive from '@/directive'
+
+Object.keys(directive).forEach((key) => {
+  app.directive(key, (directive as { [key: string]: Directive })[key])
 })

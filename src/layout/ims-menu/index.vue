@@ -1,3 +1,10 @@
+<!--
+ * @Author: Mavon
+ * @Description:
+ * @Date: 2022-01-14 16:00:47
+ * @LastEditTime: 2022-06-06 18:02:59
+ * @FilePath: /icloud-monitor-pro/src/layout/ims-menu/index.vue
+-->
 <template>
   <el-menu
     :default-active="route.path"
@@ -15,13 +22,19 @@
 import MenuItem from './MenuItem.vue'
 import { useStore } from '@/store/index'
 import { useRoute } from 'vue-router'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { hasPermission } from '@/utils/validate'
 
 const store = useStore()
 const route = useRoute()
 
+const user = computed(() => store.state.login.userInfo)
 const openeds = ref([] as string[])
-const routes = store.getters['getRoutes']
+const routes = store.getters['getRoutes'].filter((route: any) =>
+  hasPermission(user.value.roles, route)
+)
+
+console.log(routes)
 const expandRoutes = routes.filter(
   (item: { children: string | any[] }) =>
     item.children && item.children.length > 0

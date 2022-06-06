@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import localCache from '@/utils/cache'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { BASE_URL, TIME_OUT } from '../service/request/config'
+import { BASE_URL, TIME_OUT } from './config'
 
 // 创建 axios 实例
 const service = axios.create({

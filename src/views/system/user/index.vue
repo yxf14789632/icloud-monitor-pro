@@ -35,6 +35,7 @@
                 :icon="Plus"
                 size="mini"
                 @click="handleAdd"
+                v-hasPerm="['sys:user:add']"
               >
                 新增
               </el-button>
@@ -44,6 +45,7 @@
                 size="mini"
                 :disabled="single"
                 @click="handleUpdate"
+                v-hasPerm="['sys:user:edit']"
               >
                 修改
               </el-button>
@@ -54,6 +56,7 @@
                 size="mini"
                 :disabled="multiple"
                 @click="handleDelete"
+                v-hasPerm="['sys:user:delete']"
               >
                 删除
               </el-button>
@@ -168,6 +171,7 @@
                     circle
                     plain
                     @click="handleUpdate(scope.row)"
+                    v-hasPerm="['sys:user:edit']"
                   >
                   </el-button>
                   <el-button
@@ -177,6 +181,7 @@
                     circle
                     plain
                     @click="handleDelete(scope.row)"
+                    v-hasPerm="['sys:user:delete']"
                   >
                   </el-button>
                   <el-button
@@ -545,10 +550,10 @@ function handleDelete(row: { [key: string]: any }) {
     }
   )
     .then(function () {
-      deleteUsers(userIds).then(() => {
-        ElMessage.success('删除成功')
-        handleQuery()
-      })
+      // deleteUsers(userIds).then(() => {
+      //   ElMessage.success('删除成功')
+      //   handleQuery()
+      // })
     })
     .catch(() => ElMessage.info('已取消删除'))
 }

@@ -8,7 +8,7 @@ import { IAccount } from './type'
  */
 export function accountLoginRequest(account: IAccount) {
   return request({
-    url: '/login',
+    url: '/oauth/login',
     method: 'post',
     data: account
   })
@@ -42,7 +42,7 @@ export function requestUserMenu() {
  */
 export function logoutRequest() {
   return request({
-    url: '/logout',
-    method: 'delete'
+    url: '/oauth/logout',
+    method: 'DELETE'
   })
 }

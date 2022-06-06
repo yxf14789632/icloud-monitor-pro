@@ -62,6 +62,7 @@ const tab: IVaiTab = {
 store.commit('addTab', tab)
 
 // 刚开始加载 设置第一个route
+// 这里需要过滤下权限，有的菜单没有权限 无需展示
 store.commit('setRoutes', userMenus.value[0].children)
 
 store.commit('setActiveSideTab', {

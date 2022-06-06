@@ -7,7 +7,7 @@
   >
     <template v-for="item in userMenus" :key="item.path">
       <el-tab-pane
-        v-if="item.parentId === 0"
+        v-if="item.parentId === 0 && hasPermission(user.roles, item)"
         :label="item.meta.title"
         :name="item.path"
         :key="item.path"
@@ -31,9 +31,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useStore } from '@/store/index'
+import { hasPermission } from '@/utils/validate'
 
 const store = useStore()
 
+const user = computed(() => store.state.login.userInfo)
 const userMenus = computed(() => store.state.login.userMenus)
 
 const changeSideTab = (tab: any) => {
@@ -48,7 +50,9 @@ const changeSideTab = (tab: any) => {
       title: sideTab[0].meta.title,
       path: sideTab[0].path
     })
-    const routeList = sideTab[0].children
+    const routeList = sideTab[0].children.filter((route: any) =>
+      hasPermission(user.value.roles, route)
+    )
     if (routeList && routeList.length > 0) {
       store.commit('setRoutes', routeList)
     } else {

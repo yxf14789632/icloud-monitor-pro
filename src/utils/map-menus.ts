@@ -1,3 +1,10 @@
+/*
+ * @Author: Mavon
+ * @Description:
+ * @Date: 2022-01-25 14:45:21
+ * @LastEditTime: 2022-06-06 17:37:54
+ * @FilePath: /icloud-monitor-pro/src/utils/map-menus.ts
+ */
 import { RouteRecordRaw } from 'vue-router'
 import Layout from '@/layout/index.vue'
 
@@ -25,6 +32,9 @@ export function filterAsyncRoutes(
   // const allRoutes: RouteRecordRaw[] = []
   userMenus.forEach((menu) => {
     const route = { ...menu } as any
+    console.log(roles)
+    console.log(route)
+    console.log(hasPermission(roles, route))
     if (hasPermission(roles, route)) {
       if (menu.component === 'Layout') {
         route.component = Layout
