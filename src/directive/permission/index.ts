@@ -15,7 +15,6 @@ export const hasPerm: Directive = {
     }
     // 「其他角色」按钮权限校验
     const { value } = binding
-    console.log(value)
     if (value) {
       const requiredPerms = value // DOM绑定需要的按钮权限标识
 

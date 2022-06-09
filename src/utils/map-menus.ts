@@ -2,7 +2,7 @@
  * @Author: Mavon
  * @Description:
  * @Date: 2022-01-25 14:45:21
- * @LastEditTime: 2022-06-06 17:37:54
+ * @LastEditTime: 2022-06-06 22:03:47
  * @FilePath: /icloud-monitor-pro/src/utils/map-menus.ts
  */
 import { RouteRecordRaw } from 'vue-router'
@@ -32,9 +32,7 @@ export function filterAsyncRoutes(
   // const allRoutes: RouteRecordRaw[] = []
   userMenus.forEach((menu) => {
     const route = { ...menu } as any
-    console.log(roles)
-    console.log(route)
-    console.log(hasPermission(roles, route))
+
     if (hasPermission(roles, route)) {
       if (menu.component === 'Layout') {
         route.component = Layout

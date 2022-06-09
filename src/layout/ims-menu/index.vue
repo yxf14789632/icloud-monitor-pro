@@ -2,7 +2,7 @@
  * @Author: Mavon
  * @Description:
  * @Date: 2022-01-14 16:00:47
- * @LastEditTime: 2022-06-06 18:02:59
+ * @LastEditTime: 2022-06-06 22:03:37
  * @FilePath: /icloud-monitor-pro/src/layout/ims-menu/index.vue
 -->
 <template>
@@ -34,7 +34,6 @@ const routes = store.getters['getRoutes'].filter((route: any) =>
   hasPermission(user.value.roles, route)
 )
 
-console.log(routes)
 const expandRoutes = routes.filter(
   (item: { children: string | any[] }) =>
     item.children && item.children.length > 0

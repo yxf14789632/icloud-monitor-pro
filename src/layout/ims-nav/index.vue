@@ -1,3 +1,10 @@
+<!--
+ * @Author: Mavon
+ * @Description:
+ * @Date: 2022-01-14 13:44:13
+ * @LastEditTime: 2022-06-08 15:15:05
+ * @FilePath: /icloud-monitor-pro/src/layout/ims-nav/index.vue
+-->
 <template>
   <div class="ims-nav">
     <el-row :gutter="15">
@@ -19,7 +26,9 @@
       </el-col>
       <el-col :span="24" :xs="4" :sm="12" :md="12" :lg="12" :xl="12">
         <div class="right-panel">
-          <el-icon class="ims-icon-fullcreen"><full-screen /></el-icon>
+          <el-icon class="ims-icon-fullcreen" @click="onToggle"
+            ><full-screen
+          /></el-icon>
           <el-icon class="ims-icon-refresh"><refresh /></el-icon>
           <el-dropdown>
             <span class="avatar-dropdown">
@@ -51,6 +60,7 @@ import { RouteLocationMatched, useRoute, useRouter } from 'vue-router'
 import localCache from '@/utils/cache'
 import { ElMessageBox } from 'element-plus'
 import { logoutRequest } from '@/service/login/login'
+import screenfull from 'screenfull'
 
 const tabs: Ref<RouteLocationMatched[]> = ref([])
 
@@ -76,6 +86,9 @@ const logout = () => {
       router.push(`/login`)
     })
   })
+}
+const onToggle = () => {
+  screenfull.toggle()
 }
 
 getBredcurm()
