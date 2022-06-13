@@ -73,6 +73,20 @@
           </el-table-column>
           <el-table-column label="操作" align="center" width="150">
             <template #default="scope">
+              <el-tooltip
+                class="box-item"
+                effect="dark"
+                content="查看监控"
+                placement="bottom-start"
+              >
+                <el-button
+                  color="#626aef"
+                  :icon="Histogram"
+                  circle
+                  plain
+                  @click.stop="drawer = true"
+                ></el-button>
+              </el-tooltip>
               <el-button
                 type="primary"
                 :icon="Edit"
@@ -98,8 +112,8 @@
             :hide-on-single-page="total > 0"
             :total="total"
             layout="total, sizes, prev, pager, next, jumper"
-            :current-page="queryParams.pageNum"
-            :page-size="queryParams.pageSize"
+            v-model:currentPage="queryParams.pageNum"
+            v-model:page-size="queryParams.pageSize"
             @size-change="handleQuery"
             @current-change="handleQuery"
             @prev-click="handleQuery"
@@ -109,15 +123,33 @@
       </el-form>
     </div>
   </div>
+
+  <el-drawer v-model="drawer" :show-close="true" size="40%">
+    <template #header="{ titleId, titleClass }">
+      <!-- 机器资产名称和tag-->
+      <h4 :id="titleId" :class="titleClass">This is a custom header!</h4>
+    </template>
+    This is drawer content.
+  </el-drawer>
 </template>
 
 <script lang="ts" setup>
 import { ElForm } from 'element-plus'
 import { onMounted, reactive, ref, toRefs } from 'vue'
-import { Search, Plus, Edit, Refresh, Delete } from '@element-plus/icons-vue'
+import {
+  Search,
+  Plus,
+  Edit,
+  Refresh,
+  Delete,
+  Histogram
+} from '@element-plus/icons-vue'
+import { ElButton, ElDrawer } from 'element-plus'
 import { listMachineWithPage } from '@/service/resource/hosts'
 
 const queryFormRef = ref(ElForm)
+
+const drawer = ref(false)
 
 const state = reactive({
   // 总条数
@@ -148,6 +180,7 @@ function handleUpdate(row: { [key: string]: any }) {}
 
 function handleQuery() {
   state.loading = true
+  console.log(state.queryParams)
   listMachineWithPage(state.queryParams).then((response) => {
     const { data, total } = response as any
     state.clientList = data
@@ -160,6 +193,10 @@ function handleSelectionChange(selection: any) {
   state.ids = selection.map((item: any) => item.id)
   state.single = selection.length !== 1
   state.multiple = !selection.length
+}
+
+const handleClose = (done: () => void) => {
+  done()
 }
 
 onMounted(() => {

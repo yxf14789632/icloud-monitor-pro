@@ -17,7 +17,7 @@ app.use(store)
 // 刷新 重新load localCache数据到vuex中
 setupStore()
 app.use(router)
-app.use(ElementPlus, { size: 'small', zIndex: 3000, locale: zhCn })
+app.use(ElementPlus, { zIndex: 3000, locale: zhCn })
 app.use(IconPlugin)
 app.mount('#app')
 
