@@ -44,6 +44,22 @@
               >
             </template>
           </el-table-column>
+          <el-table-column label="监控" width="100">
+            <template #default="scope">
+              <el-tooltip
+                class="box-item"
+                effect="dark"
+                content="查看监控"
+                placement="bottom-start"
+              >
+                <el-icon
+                  class="ims-monitor-icon"
+                  @click.stop="showDetailMonitor(scope.row)"
+                  ><Histogram
+                /></el-icon>
+              </el-tooltip>
+            </template>
+          </el-table-column>
           <el-table-column label="所属机房" prop="machineRoom" width="150" />
           <el-table-column
             label="所属机柜"
@@ -73,20 +89,6 @@
           </el-table-column>
           <el-table-column label="操作" align="center" width="150">
             <template #default="scope">
-              <el-tooltip
-                class="box-item"
-                effect="dark"
-                content="查看监控"
-                placement="bottom-start"
-              >
-                <el-button
-                  color="#626aef"
-                  :icon="Histogram"
-                  circle
-                  plain
-                  @click.stop="drawer = true"
-                ></el-button>
-              </el-tooltip>
               <el-button
                 type="primary"
                 :icon="Edit"
@@ -122,15 +124,55 @@
         </div>
       </el-form>
     </div>
-  </div>
 
-  <el-drawer v-model="drawer" :show-close="true" size="40%">
-    <template #header="{ titleId, titleClass }">
-      <!-- 机器资产名称和tag-->
-      <h4 :id="titleId" :class="titleClass">This is a custom header!</h4>
-    </template>
-    This is drawer content.
-  </el-drawer>
+    <div class="ims-drawer-div">
+      <el-drawer
+        custom-class="ims-drawer"
+        v-model="state.drawer"
+        :show-close="false"
+        size="50%"
+        :modal="false"
+        modal-class="ims-drawer-modal"
+        :lock-scroll="false"
+      >
+        <template #header="{ close }">
+          <!-- 机器资产名称和tag-->
+          <div>
+            <div style="font-size: 16px; font-weight: 600; color: #184e7f">
+              {{ state.drawerRow.assetNum }}
+              <div
+                style="
+                  position: absolute;
+                  top: 10px;
+                  right: 10px;
+                  line-height: 30px;
+                  cursor: pointer;
+                "
+              >
+                <el-icon @click="close"><Close /></el-icon>
+                <el-button class="ims-monitor-setting-btn">设置告警</el-button>
+                <el-button class="ims-key-setmonitor-btn" type="primary"
+                  >一键告警</el-button
+                >
+              </div>
+            </div>
+            <div style="margin-top: 4px; font-size: 12px">
+              {{ state.drawerRow.ip }}
+              <el-tag
+                class="labelTag"
+                v-for="(value, index) in state.drawerRow.tags"
+                :key="index"
+                >{{ `${value}` }}</el-tag
+              >
+            </div>
+            <el-divider />
+          </div>
+        </template>
+
+        This is drawer content.
+      </el-drawer>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -144,12 +186,13 @@ import {
   Delete,
   Histogram
 } from '@element-plus/icons-vue'
+import { Host } from '@/types/index'
 import { ElButton, ElDrawer } from 'element-plus'
 import { listMachineWithPage } from '@/service/resource/hosts'
 
 const queryFormRef = ref(ElForm)
 
-const drawer = ref(false)
+// const drawer = ref(false)
 
 const state = reactive({
   // 总条数
@@ -162,6 +205,10 @@ const state = reactive({
   multiple: true,
   // 遮罩层
   loading: true,
+
+  drawerRow: {} as Host,
+
+  drawer: false,
 
   clientList: [],
   queryParams: {
@@ -199,8 +246,19 @@ const handleClose = (done: () => void) => {
   done()
 }
 
+const showDetailMonitor = (row: any) => {
+  state.drawer = false
+  state.drawerRow = row
+  state.drawer = true
+  // 获取机器的基础监控指标和关联的服务指标
+}
+
 onMounted(() => {
   handleQuery()
+  //点击其他元素 关闭drawer
+  document.addEventListener('click', (e) => {
+    state.drawer = false
+  })
 })
 </script>
 
@@ -217,5 +275,53 @@ onMounted(() => {
 }
 .pagination-container.hidden {
   display: none;
+}
+
+.ims-monitor-icon {
+  cursor: pointer;
+}
+
+.ims-monitor-icon :hover {
+  color: #409eff;
+}
+.ims-monitor-setting-btn {
+  background-color: #ffffff;
+  position: fixed;
+  right: 40px;
+  height: 30px;
+  top: 0px;
+  display: block;
+  margin-top: 7px;
+  font-size: 12px;
+}
+
+.ims-key-setmonitor-btn {
+  display: block;
+  position: fixed;
+  right: 130px;
+  height: 30px;
+  top: 0px;
+  margin-top: 7px;
+  font-size: 12px;
+}
+
+.ims-drawer-div {
+  border-left: 1px solid #ddd;
+  box-shadow: -3px 0 3px 0 #4949571f;
+}
+
+/deep/ .ims-drawer-modal {
+  position: relative !important;
+  z-index: 0;
+}
+
+/deep/ .ims-drawer {
+  width: 50%;
+  z-index: 3010;
+  position: fixed;
+}
+
+/deep/ .el-drawer__header {
+  margin-bottom: 0px;
 }
 </style>
